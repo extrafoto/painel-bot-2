@@ -5,8 +5,8 @@
  *  - TOGGLE (PUT): https://services-n8n.8a8cte.easypanel.host/webhook-test/55f6af41-b89e-46f1-98b1-5bcfb0a599a4
  *******************************/
 
-const LIST_URL   = "https://services-n8n.8a8cte.easypanel.host/webhook-test/88a25f2b-0085-4a86-81e0-4bbd3a8eb714"; // POST
-const TOGGLE_URL = "https://services-n8n.8a8cte.easypanel.host/webhook-test/55f6af41-b89e-46f1-98b1-5bcfb0a599a4"; // PUT (toggle)
+const LIST_URL   = "/api/lista";"https://services-n8n.8a8cte.easypanel.host/webhook-test/88a25f2b-0085-4a86-81e0-4bbd3a8eb714"; // POST
+const TOGGLE_URL = "/api/toggle";"https://services-n8n.8a8cte.easypanel.host/webhook-test/55f6af41-b89e-46f1-98b1-5bcfb0a599a4"; // PUT (toggle)
 
 let contatosGlobais = [];
 let intervaloAtualizacao = null;
