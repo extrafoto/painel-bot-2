@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Painel Bot WhatsApp</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <h1 id="titulo-painel">🟢 Painel Bot WhatsApp</h1>
+<div class="top-controls">
+ <div class="esquerda">
+  <span class="atualizacao"><strong>Última Atualização:</strong> <span id="hora-atual">--:--</span></span>
+  <span><strong>Total:</strong> <span id="total-contatos">0</span></span>
+  <span><strong>Bot Ativos:</strong> <span id="bots-ativos">0</span></span>
+</div>
+  <div class="busca-cidade">
+    <input type="text" id="busca" placeholder="🔍 Buscar por nome ou número...">
+    <select id="filtro-cidade"></select>
+    <span id="contatos-cidade" style="margin-left:12px;color:#007bff;font-weight:bold"></span>
+  </div>
+</div>
+
+
+  <div class="filtros-modo">
+    <button class="filtro ativo" data-filtro="todos">Todos</button>
+    <button class="filtro" data-filtro="bot">Bot</button>
+    <button class="filtro" data-filtro="humano">Humano</button>
+  </div>
+
+<div class="grafico-cidade">
+  <canvas id="grafico-cidades" height="100"></canvas>
+</div>
+
+
+  <div id="painel"></div>
+
+  <!-- Coloque o script aqui -->
+  <script>
+  async function carregarCidades() {
+    try {
+      const response = await fetch('cidades_pe.txt');
+      if (!response.ok) throw new Error("Arquivo de cidades não encontrado");
+      const txt = await response.text();
+      const cidades = txt.split('\n').map(linha => linha.trim()).filter(Boolean);
+
+      const filtroCidade = document.getElementById('filtro-cidade');
+      // Limpa opções antigas (menos a primeira: "Todas as cidades")
+      filtroCidade.innerHTML = '<option value="">Todas as cidades</option>';
+
+      cidades.forEach(cidade => {
+        const option = document.createElement('option');
+        option.value = cidade;
+        option.textContent = cidade;
+        filtroCidade.appendChild(option);
+      });
+    } catch (e) {
+      console.error("Erro ao carregar cidades:", e);
+    }
+  }
+  // Carrega cidades ao iniciar
+  carregarCidades();
+  </script>
+  <script src="js/app.js"></script>
+</body>
+</html>
