@@ -88,16 +88,25 @@ async function carregarDados() {
 
 
 
-async function alterarModo(key, modoAtual) {
-  const novoModo = modoAtual === 'bot' ? 'humano' : 'bot';
-  await fetch('https://services-n8n.8a8cte.easypanel.host/webhook/3ed48b7d-3ce7-471c-ae66-10f732bdb42b', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ key: key, modo: novoModo })
-  });
-  await carregarDados();
+<script>
+async function carregarContatos() {
+  try {
+    const response = await fetch("/.netlify/functions/baserow");
+    const json = await response.json();
 
+    const contatos = json?.results || json; // depende da resposta da API
+    contatos.forEach(c => {
+      console.log(`Nome: ${c.nome}, Número: ${c.numero}, Cidade: ${c.cidade}, Modo: ${c.modo}`);
+      // Aqui você pode montar a tabela, cards, etc.
+    });
+  } catch (err) {
+    console.error("Erro ao carregar contatos:", err);
+  }
 }
+
+carregarContatos();
+</script>
+
 
 
     setInterval(carregarDados, 5000); // atualiza a cada 5s
