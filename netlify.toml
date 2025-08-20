@@ -1,13 +1,3 @@
-[[redirects]]
-  from = "/api/lista"
-  to = "https://services-n8n.8a8cte.easypanel.host/webhook-test/88a25f2b-0085-4a86-81e0-4bbd3a8eb714"
-  status = 200
-  force = true
-  headers = { X-From = "netlify-proxy" }
-
-[[redirects]]
-  from = "/api/toggle"
-  to = "https://services-n8n.8a8cte.easypanel.host/webhook-test/55f6af41-b89e-46f1-98b1-5bcfb0a599a4"
-  status = 200
-  force = true
-  headers = { X-From = "netlify-proxy" }
+[build]
+  functions = "netlify/functions"
+  publish = "public"
