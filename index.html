@@ -64,25 +64,28 @@
 async function carregarDados() {
   try {
     const resposta = await fetch("https://services-n8n.8a8cte.easypanel.host/webhook/consultar-dados");
+
+    // Interpreta a resposta como HTML, não como JSON
     const html = await resposta.text();
 
-    // Verifica se contém <html> ou <iframe> para evitar erros
-    if (!html.includes("<table")) {
-      throw new Error("Conteúdo inesperado: não parece HTML de tabela.");
-    }
-
-    // Exibe o HTML na div com id="tabela"
+    // Insere o HTML retornado na div com id="tabela"
     const tabelaEl = document.getElementById("tabela");
+
     if (tabelaEl) {
       tabelaEl.innerHTML = html;
     } else {
-      throw new Error("Elemento #tabela não encontrado.");
+      console.error("Elemento com ID 'tabela' não encontrado.");
     }
+
   } catch (erro) {
     console.error("Erro ao carregar dados:", erro);
-    document.getElementById('tabela').innerHTML = "<p style='color:red;'>Erro ao carregar dados</p>";
+    const tabelaEl = document.getElementById("tabela");
+    if (tabelaEl) {
+      tabelaEl.innerHTML = "<p style='color:red;'>Erro ao carregar dados</p>";
+    }
   }
 }
+
 
 
 async function alterarModo(key, modoAtual) {
