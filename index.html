@@ -61,28 +61,30 @@
   <script>
     const tabela = document.getElementById('tabela-corpo');
 
-    async function carregarDados() {
-      const resposta = await fetch('https://services-n8n.8a8cte.easypanel.host/webhook/3095c3f0-3ff8-4d30-bc35-a279a418f688');
-      const dados = await resposta.json();
-      tabela.innerHTML = '';
+async function carregarDados() {
+  try {
+    const response = await fetch('https://services-n8n.8a8cte.easypanel.host/webhook/3095c3f0-3ff8-4d30-bc35-a279a418f688');
 
-      dados.forEach((linha) => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${linha.nome}</td>
-          <td>${linha.numero}</td>
-          <td>${linha.cidade}</td>
-          <td>${linha.mensagem}</td>
-          <td>${linha.modo}</td>
-          <td>
-            <button class="${linha.modo === 'bot' ? 'humano' : ''}" onclick="alterarModo('${linha.key}', '${linha.modo}')">
-              ${linha.modo === 'bot' ? 'Tornar Humano' : 'Tornar Bot'}
-            </button>
-          </td>
-        `;
-        tabela.appendChild(tr);
-      });
+    const contentType = response.headers.get("Content-Type");
+    const text = await response.text();
+    console.log('Resposta:', text);
+
+    if (!contentType.includes('application/json')) {
+      throw new Error('Resposta não é JSON válida!');
     }
+
+    const data = JSON.parse(text);
+
+    if (!Array.isArray(data) || data.length === 0 || !data[0].table) {
+      throw new Error('Dados inesperados no corpo da resposta.');
+    }
+
+    document.getElementById('tabela').innerHTML = data[0].table;
+  } catch (error) {
+    console.error('Erro ao carregar dados:', error);
+    document.getElementById('tabela').innerHTML = '<p style="color:red;">Erro ao carregar dados. Verifique o webhook e o formato da resposta.</p>';
+  }
+}
 
 async function alterarModo(key, modoAtual) {
   const novoModo = modoAtual === 'bot' ? 'humano' : 'bot';
