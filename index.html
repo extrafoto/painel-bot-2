@@ -86,7 +86,7 @@
 
    async function alterarModo(key, modoAtual) {
   const novoModo = modoAtual === 'bot' ? 'humano' : 'bot';
-  await fetch('https://services-n8n.8a8cte.easypanel.host/webhook/3ed48b7d-3ce7-471c-ae66-10f732bdb42b', {
+  await fetch('https://services-n8n.8a8cte.easypanel.host/webhook/3ed48b7d-3ce7-471c-ae66-10f732bdb42b'); {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ key: key, modo: novoModo })
